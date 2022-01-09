@@ -1,18 +1,36 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <TopNavigation :items="topNavigationItems" />
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import TopNavigation from "@/components/TopNavigation";
 
 export default {
   name: "Home",
   components: {
-    HelloWorld,
+    TopNavigation,
+  },
+  data() {
+    return {
+      topNavigationItems: [
+        {
+          label: "Add Category",
+          action: () => {},
+        },
+        {
+          label: "Add Product",
+          action: () => {},
+        },
+        {
+          icon: "arrow-left",
+          action: () => {},
+        },
+        {
+          icon: "shopping-basket",
+          action: () => {},
+        },
+      ],
+    };
   },
 };
 </script>

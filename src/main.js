@@ -3,5 +3,18 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import Notifications from "@kyvg/vue3-notification";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faShoppingBasket,
+  faArrowLeft,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-createApp(App).use(store).use(router).use(Notifications).mount("#app");
+library.add(faShoppingBasket, faArrowLeft);
+
+createApp(App)
+  .use(store)
+  .use(router)
+  .use(Notifications)
+  .component("fa", FontAwesomeIcon)
+  .mount("#app");
