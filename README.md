@@ -53,3 +53,4 @@ Basket Component Olmalı.
 Üst Menü (Navigation) Component Olmalı
 
 Uygulama Single Page App olarak inşa edilmeli.
+https://app.uizard.io/p/26e42f8b
