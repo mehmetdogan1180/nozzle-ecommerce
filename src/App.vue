@@ -33,4 +33,7 @@ input {
   align-items: flex-start;
   background-color: #eceff0;
 }
+button {
+  cursor: pointer;
+}
 </style>

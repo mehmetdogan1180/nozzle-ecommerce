@@ -14,6 +14,8 @@
 <script>
 import SideMenu from "@/components/SideMenu";
 import CategoryProduct from "@/components/CategoryProduct";
+import Categories from "@/storage/Category.js";
+import Products from "@/storage/Products.js";
 
 export default {
   name: "Home",
@@ -21,53 +23,54 @@ export default {
     SideMenu,
     CategoryProduct,
   },
+  created() {
+    this.getCategories();
+  },
+  computed: {
+    sideMenuItems() {
+      return this.$store.getters["category/items"].map((i) => ({
+        label: i.name,
+        action: () => {
+          this.selectedCategoryId = i.id;
+        },
+      }));
+    },
+    products() {
+      if (!this.selectedCategoryId) return [];
+      return this.$store.state.category.categories[this.selectedCategoryId]
+        .products;
+    },
+  },
+  watch: {
+    selectedCategoryId: {
+      immediate: true,
+      handler(id) {
+        if (id) this.getProducts(id);
+      },
+    },
+  },
   data() {
     return {
-      sideMenuItems: [
-        {
-          label: "Category 1",
-          action: () => {},
-        },
-        {
-          label: "Category 2",
-          action: () => {},
-        },
-        {
-          label: "Category 3",
-          action: () => {},
-        },
-        {
-          label: "Category 4",
-          action: () => {},
-        },
-      ],
-      products: [
-        {
-          image:
-            "https://platform-api.api.uizard.io/api/assets/compilers/images/placeholder-01.jpg",
-          title: "Product 1",
-          description:
-            "Lorem ipsum dolor sit amet , consectetur adipisicing Elit , sed do eiusmod tempor incididunt ut labore et",
-          price: 40,
-        },
-        {
-          image:
-            "https://platform-api.api.uizard.io/api/assets/compilers/images/placeholder-01.jpg",
-          title: "Product 2",
-          description:
-            "Lorem ipsum dolor sit amet , consectetur adipisicing Elit , sed do eiusmod tempor incididunt ut labore et",
-          price: 35,
-        },
-        {
-          image:
-            "https://platform-api.api.uizard.io/api/assets/compilers/images/placeholder-01.jpg",
-          title: "Product 3",
-          description:
-            "Lorem ipsum dolor sit amet , consectetur adipisicing Elit , sed do eiusmod tempor incididunt ut labore et",
-          price: 27.45,
-        },
-      ],
+      selectedCategoryId: null,
     };
+  },
+  methods: {
+    getCategories() {
+      if (!this.$store.state.category.isLoaded) {
+        this.$store.dispatch("category/addCategories", Categories);
+        if (Categories.length) {
+          this.selectedCategoryId = Categories[0].id;
+        }
+      } else {
+        this.selectedCategoryId = this.$store.getters["category/items"][0]?.id;
+      }
+    },
+    getProducts(categoryId) {
+      if (!this.$store.state.category.categories[categoryId].productsIsLoaded) {
+        const products = Products.filter((i) => i.category_id === categoryId);
+        this.$store.dispatch("category/setProducts", { categoryId, products });
+      }
+    },
   },
 };
 </script>

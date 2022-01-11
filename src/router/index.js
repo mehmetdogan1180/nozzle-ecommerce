@@ -81,4 +81,22 @@ const router = createRouter({
   routes,
 });
 
+router.beforeEach((to, from, next) => {
+  const notAuthReqired = ["AuthLogin"];
+  if (notAuthReqired.includes(to.name)) {
+    next();
+  } else {
+    store
+      .dispatch("auth/getInfo")
+      .then(() => {
+        next();
+      })
+      .catch(() => {
+        next({
+          name: "AuthLogin",
+        });
+      });
+  }
+});
+
 export default router;

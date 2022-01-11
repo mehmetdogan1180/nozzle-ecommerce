@@ -35,7 +35,8 @@ export default {
         {
           icon: "arrow-left",
           action: () => {
-            this.$router.go(-1);
+            this.$store.dispatch("auth/logout");
+            this.$router.push({ name: "AuthLogin" });
           },
         },
         {

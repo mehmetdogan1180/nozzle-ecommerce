@@ -13,9 +13,15 @@
     </div>
     <div class="quantity">
       <label for="" class="quantity-label"> Qty </label>
-      <input type="text" :value="quantity" />
-      <button type="button">&times;</button>
-      <label for="" class="quantity-price"> Total: $ {{ price }} </label>
+      <input
+        type="text"
+        @change="$emit('updateQty', $event.target.value)"
+        :value="quantity"
+      />
+      <button type="button" @click="$emit('remove')">&times;</button>
+      <label for="" class="quantity-price">
+        Total: $ {{ quantity * price }}
+      </label>
     </div>
   </div>
 </template>
@@ -44,6 +50,9 @@ export default {
       type: Number,
       default: 1,
     },
+  },
+  data() {
+    return {};
   },
 };
 </script>

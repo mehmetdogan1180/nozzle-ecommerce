@@ -2,7 +2,7 @@
   <div class="basket-page">
     <div class="header"></div>
     <div class="container">
-      <Basket />
+      <Basket @success="showModal = true" />
     </div>
   </div>
   <Modal v-model="showModal" hideClose size="lg">
@@ -14,7 +14,7 @@
     </div>
     <template #footer>
       <div class="go-back">
-        <button type="button">&lt;- GO BACK</button>
+        <button type="button" @click="$router.go(-1)">&lt;- GO BACK</button>
       </div>
     </template>
   </Modal>
@@ -31,7 +31,7 @@ export default {
   },
   data() {
     return {
-      showModal: true,
+      showModal: false,
     };
   },
 };

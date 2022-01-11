@@ -1,43 +1,80 @@
 <template>
   <div class="basket">
-    <BasketItem v-for="(item, index) in items" :key="index" v-bind="item" />
+    <BasketItem
+      class="item"
+      v-for="(item, index) in items"
+      :key="index"
+      v-bind="item"
+      @updateQty="updateQty(item.id, $event)"
+      @remove="remove(item.id)"
+    />
     <div class="actions">
       <div class="total">
         <label for=""> Total: </label>
-        <span class="price"> $ 70.0 </span>
+        <span class="price"> $ {{ total }} </span>
       </div>
-      <button type="button">Complete Purchase</button>
+      <button type="button" @click="complete">Complete Purchase</button>
     </div>
   </div>
 </template>
 
 <script>
 import BasketItem from "@/components/BasketItem";
+import Products from "@/storage/Products.js";
+
 export default {
   name: "ComponentsBasket",
   components: {
     BasketItem,
   },
+  computed: {
+    items() {
+      return this.$store.state.basket.items.map((i) => {
+        const product = Products.find((p) => i.id === p.id);
+        return {
+          id: i.id,
+          title: product.title,
+          image: product.image,
+          description: product.description,
+          quantity: i.quantity,
+          price: product.price,
+        };
+      });
+    },
+    total() {
+      return this.items.reduce((prev, curr) => {
+        return prev + curr.price * curr.quantity;
+      }, 0);
+    },
+  },
   data() {
-    return {
-      items: [
-        {
-          title: "Product 1",
-          image:
-            "https://platform-api.api.uizard.io/api/assets/compilers/images/placeholder-01.jpg",
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          quantity: 2,
-          price: 70.01,
-        },
-      ],
-    };
+    return {};
+  },
+  methods: {
+    complete() {
+      this.$store.dispatch("basket/clear");
+      this.$emit("success");
+    },
+    updateQty(productId, qty) {
+      this.$store.dispatch("basket/setItem", {
+        id: productId,
+        quantity: +qty,
+      });
+    },
+    remove(productId) {
+      this.$store.dispatch("basket/removeItem", {
+        id: productId,
+      });
+    },
   },
 };
 </script>
 
 <style lang="scss">
 .basket {
+  .item {
+    margin-bottom: 30px;
+  }
   .actions {
     margin-top: 50px;
     text-align: center;
