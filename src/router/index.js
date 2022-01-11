@@ -13,7 +13,31 @@ const routes = [
         name: "Home",
         component: () => import("@/views/Home"),
       },
+      {
+        path: "add-category",
+        name: "AddCategory",
+        component: () => import("@/views/AddCategory"),
+      },
+      {
+        path: "add-product",
+        name: "AddProduct",
+        component: () => import("@/views/AddProduct"),
+      },
     ],
+    beforeEnter: (to, from, next) => {
+      if (isAuthenticated()) {
+        next();
+      } else {
+        next({
+          name: "AuthLogin",
+        });
+      }
+    },
+  },
+  {
+    path: "/basket",
+    name: "Basket",
+    component: () => import("@/views/Basket"),
     beforeEnter: (to, from, next) => {
       if (isAuthenticated()) {
         next();

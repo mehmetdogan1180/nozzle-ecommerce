@@ -1,40 +1,28 @@
 <template>
-  <TopNavigation :items="topNavigationItems" />
-  <div class="container">
-    <SideMenu :items="sideMenuItems" />
+  <SideMenu :items="sideMenuItems" />
+  <div class="content">
+    <div class="products">
+      <CategoryProduct
+        v-for="(product, index) in products"
+        :key="index"
+        v-bind="product"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import TopNavigation from "@/components/TopNavigation";
 import SideMenu from "@/components/SideMenu";
+import CategoryProduct from "@/components/CategoryProduct";
 
 export default {
   name: "Home",
   components: {
-    TopNavigation,
     SideMenu,
+    CategoryProduct,
   },
   data() {
     return {
-      topNavigationItems: [
-        {
-          label: "Add Category",
-          action: () => {},
-        },
-        {
-          label: "Add Product",
-          action: () => {},
-        },
-        {
-          icon: "arrow-left",
-          action: () => {},
-        },
-        {
-          icon: "shopping-basket",
-          action: () => {},
-        },
-      ],
       sideMenuItems: [
         {
           label: "Category 1",
@@ -53,13 +41,42 @@ export default {
           action: () => {},
         },
       ],
+      products: [
+        {
+          image:
+            "https://platform-api.api.uizard.io/api/assets/compilers/images/placeholder-01.jpg",
+          title: "Product 1",
+          description:
+            "Lorem ipsum dolor sit amet , consectetur adipisicing Elit , sed do eiusmod tempor incididunt ut labore et",
+          price: 40,
+        },
+        {
+          image:
+            "https://platform-api.api.uizard.io/api/assets/compilers/images/placeholder-01.jpg",
+          title: "Product 2",
+          description:
+            "Lorem ipsum dolor sit amet , consectetur adipisicing Elit , sed do eiusmod tempor incididunt ut labore et",
+          price: 35,
+        },
+        {
+          image:
+            "https://platform-api.api.uizard.io/api/assets/compilers/images/placeholder-01.jpg",
+          title: "Product 3",
+          description:
+            "Lorem ipsum dolor sit amet , consectetur adipisicing Elit , sed do eiusmod tempor incididunt ut labore et",
+          price: 27.45,
+        },
+      ],
     };
   },
 };
 </script>
 
-<style lang="scss">
-.container {
-  padding: 10px 60px;
+<style lang="scss" scope>
+.content {
+  width: 100%;
+  .products > div {
+    margin-bottom: 30px;
+  }
 }
 </style>

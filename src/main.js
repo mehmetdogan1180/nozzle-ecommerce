@@ -6,11 +6,12 @@ import Notifications from "@kyvg/vue3-notification";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faShoppingBasket,
+  faCheck,
   faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faShoppingBasket, faArrowLeft);
+library.add(faShoppingBasket, faCheck, faArrowLeft);
 
 createApp(App)
   .use(store)

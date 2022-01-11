@@ -2,15 +2,20 @@
   <transition name="modal" v-if="showModal">
     <div class="modal-mask">
       <div class="modal-wrapper">
-        <div class="modal-container">
+        <div class="modal-container" :class="size">
           <div class="modal-header">
-            <span class="close" @click="showModal = false"> &times; </span>
+            <span v-if="!hideClose" class="close" @click="showModal = false">
+              &times;
+            </span>
             <slot name="header"></slot>
           </div>
 
           <div class="modal-body">
             <slot />
           </div>
+        </div>
+        <div class="model-footer">
+          <slot name="footer"></slot>
         </div>
       </div>
     </div>
@@ -24,6 +29,14 @@ export default {
     modelValue: {
       type: Boolean,
       default: false,
+    },
+    hideClose: {
+      type: Boolean,
+      default: false,
+    },
+    size: {
+      type: String,
+      defalut: null,
     },
   },
   computed: {
@@ -67,6 +80,10 @@ export default {
     padding: 20px 30px;
     transition: all 0.3s ease;
     position: relative;
+    &.lg {
+      width: 1071px;
+      height: 482px;
+    }
     .modal-header {
       text-align: center;
       margin: 30px 0;

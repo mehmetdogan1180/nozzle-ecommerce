@@ -26,4 +26,11 @@ html,
 input {
   border: 0;
 }
+.box {
+  padding: 20px;
+  border-radius: 25px;
+  display: flex;
+  align-items: flex-start;
+  background-color: #eceff0;
+}
 </style>

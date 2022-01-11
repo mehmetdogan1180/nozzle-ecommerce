@@ -27,8 +27,10 @@ export default {
   width: 161px;
   ul {
     list-style: none;
+    margin: 0;
+    padding: 0;
     li {
-      margin-top: 20px;
+      margin-bottom: 20px;
       a {
         text-decoration: none;
         color: rgb(3, 3, 3);
